@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  openpose:
+    build: .
+    volumes:
+       - /tmp/.X11-unix:/tmp/.X11-unix
+       - /dev/snd:/dev/snd
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+
+#docker run --gpus all --name openpose -v /tmp/.X11-unix:/tmp/.X11-unix -v /dev/snd:/dev/snd -e DISPLAY=unix$DISPLAY -v 연결할 디렉터리들 path(ex:/home/nia_data/raw:/data/raw) (-v /home/nia_data/processed:/data/processed) -it bongkyung/openpose:latest /bin/bash
