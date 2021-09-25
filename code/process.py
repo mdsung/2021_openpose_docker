@@ -4,10 +4,10 @@ import subprocess
 from pathlib import Path
 
 CURRENT_PATH = Path(__file__)
-# RAW_DATA_PATH = Path('/data/processed/core/assembly/')
-# PROCESSED_DATA_PATH = Path('/data/processed/core/assembly_skeletal/')
-RAW_DATA_PATH = Path('/home/nia_data/processed/core/assembly/')
-PROCESSED_DATA_PATH = Path('/home/nia_data/processed/core/assembly_skeletal/')
+RAW_DATA_PATH = Path('/data/processed/core/assembly/')
+PROCESSED_DATA_PATH = Path('/data/processed/core/assembly_skeletal/')
+# RAW_DATA_PATH = Path('/home/nia_data/processed/core/assembly/')
+# PROCESSED_DATA_PATH = Path('/home/nia_data/processed/core/assembly_skeletal/')
 
 PROGRAM_PATH = Path('/openpose/build/examples/openpose/openpose.bin')
 

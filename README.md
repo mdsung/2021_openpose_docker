@@ -14,6 +14,7 @@
 * `code/build_docker.sh`: script for build docker image
 * `code/run_docker.sh`: script for run docker container 
 * `code/process.py`: python script to list target movies and to run openpose to target movies.
+* `code/postprocess.py`: python script to change chown and add "_out" if the name doesn't contain '_out' after openpose was applied
 * `dockerfile`: dockerfile for running openpose in any environment
 
 ## Process
