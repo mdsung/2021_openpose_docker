@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   openpose:
-    image: 2021_openpose_docker
+    build: .
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /dev/snd:/dev/snd
