@@ -5,7 +5,8 @@ FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     python3-dev python3-pip python3-setuptools git g++ wget make libprotobuf-dev protobuf-compiler libopencv-dev \
-    libgoogle-glog-dev libboost-all-dev libcaffe-cuda-dev libhdf5-dev libatlas-base-dev
+    libgoogle-glog-dev libboost-all-dev libcaffe-cuda-dev libhdf5-dev libatlas-base-dev \
+    ffmpeg
 
 #for python api
 #RUN pip3 install scikit-build
@@ -32,7 +33,16 @@ RUN cmake -DBUILD_PYTHON=ON \
 
 RUN sed -ie 's/set(AMPERE "80 86")/#&/g'  ../cmake/Cuda.cmake && \
     sed -ie 's/set(AMPERE "80 86")/#&/g'  ../3rdparty/caffe/cmake/Cuda.cmake
-RUN make -j`nproc`
-RUN make install
+RUN make -j`nproc`&& make install
 
-CMD ['/bin/bash']
+RUN cd /openpose/build/python/openpose && \
+    make install && \
+    cp ./pyopenpose.cpython-36m-x86_64-linux-gnu.so /usr/local/lib/python3.6/dist-packages &&\
+    cd /usr/local/lib/python3.6/dist-packages &&\
+    ln -s pyopenpose.cpython-36m-x86_64-linux-gnu.so pyopenpose &&\
+    export LD_LIBRARY_PATH=/openpose/build/python/openpose
+
+COPY code/process.py /openpose/
+RUN chmod +x /openpose/process.py
+WORKDIR /openpose/
+CMD ['./process.py']
