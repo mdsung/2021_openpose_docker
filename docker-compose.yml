@@ -5,8 +5,7 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /dev/snd:/dev/snd
-      - /home/nia_data/raw:/data/raw 
-      - /home/nia_data/processed:/data/processed
+      - ${DOCKER_VOLUME_PROCESSED_PATH}:/data/processed
     deploy:
       resources:
         reservations:

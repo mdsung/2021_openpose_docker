@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
+import os
 from pathlib import Path
 import pandas as pd
+from dotenv import load_dotenv
 
 # Define Path
+load_dotenv(verbose=True)
 try:
     PROJECT_PATH = Path(__file__).parents[1]
 except NameError:
     PROJECT_PATH = Path('.').absolute().parents[0]
-    
-RAW_DATA_PATH = Path('/home/nia_data/processed/core/assembly')
-JSON_DATA_PATH = Path('/home/nia_data/processed/core/assembly_json')
-    
+RAW_DATA_PATH = Path(os.getenv('RAW_DATA_PATH'))
+OUTPUT_DATA_PATH = Path(os.getenv('OUTPUT_DATA_PATH'))
+JSON_DATA_PATH = Path(os.getenv('JSON_DATA_PATH'))
+
 def read_folder_contents(path:Path, extension:str)->list:
     return path.glob(f'**/*.{extension}')
 

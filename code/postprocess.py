@@ -3,8 +3,11 @@ import pwd
 import grp
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
-PROCESSED_DATA_PATH = Path('/home/nia_data/processed/core/assembly_skeletal/')
+# Define Path
+load_dotenv(verbose=True)
+PROCESSED_DATA_PATH = Path(os.getenv('OUTPUT_DATA_PATH'))
 USERNAME = 'suncheol'
 GROUP = 'nia'
 
