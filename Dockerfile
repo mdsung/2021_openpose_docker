@@ -45,4 +45,4 @@ RUN cd /openpose/build/python/openpose && \
 COPY code/process.py /openpose/
 RUN chmod +x /openpose/process.py
 WORKDIR /openpose/
-CMD python3 process.py
+CMD ./process.py
