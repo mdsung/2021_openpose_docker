@@ -1,8 +1,6 @@
 # Openpose docker for python
-## Author
-    MinDong Sung.M.D.
-## Date
-    2021.09.25
+- Author: MinDong Sung.M.D.
+- Date: 2021.09.25
 ## Objective
 - Run openpose on targeted folder 
 - Ignore already processed videos.
