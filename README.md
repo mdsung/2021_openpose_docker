@@ -18,6 +18,17 @@
 * `code/get_progress.py`: python script to create csv file about processed files, and to calculate progress of the work
 * `dockerfile`: dockerfile for running openpose in any environment
 * `docker-compose.yml`: docker-compose file for all process
+* `.env`: configuration file - especially, data path
+    ```
+    # for docker volume - which mount to /data/processed in docker container
+    DOCKER_VOLUME_PROCESSED_PATH=/home/nia_data/processed 
+    # the path for raw video image 
+    RAW_DATA_PATH=/home/nia_data/processed/core/assembly 
+    # the path for processed video image
+    OUTPUT_DATA_PATH=/home/nia_data/processed/core/assembly_skeletal 
+    # the path for processed json file
+    JSON_DATA_PATH=/home/nia_data/processed/core/assembly_json 
+    ```
 
 ## Process
 1. Run `docker-compose --env-file .env up`
