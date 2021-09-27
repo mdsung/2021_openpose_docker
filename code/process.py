@@ -27,19 +27,17 @@ def read_folder_mp4_contents(path:Path, extension:str):
 def create_output_folder(output_folder):
     output_folder.mkdir(parents=True, exist_ok=True)
 
-def get_json_file_name_list(json_list):
-    return list({"_".join(js.name.split("_")[:4]) for js in json_list})
-
 def get_target_file_list(raw_mp4_list, processed_json_name_list):
     return [f for f in raw_mp4_list \
-            if (f.name not in processed_json_name_list) & \
-                (f.parent.name.startswith('D'))]
+            if (f.name not in processed_json_name_list) & (f.name.startswith('D'))]
 
 def get_json_output_folder(input_file:Path):
-    json_output_file_name = str(input_file.parents[0]).\
-                            replace('assembly', 'assembly_json')
-    json_output_file = Path(json_output_file_name)
-    return json_output_file
+    patient_id = input_file.name[:4]
+    json_output_path = Path(PROCESSED_DATA_PATH, patient_id)
+    return json_output_path
+
+def get_json_file_name_list(json_list):
+    return list({"_".join(js.name.split("_")[:4]) for js in json_list})
 
 def get_output_folder(input_file:Path):
     output_file_name = str(input_file).\
