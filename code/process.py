@@ -28,8 +28,13 @@ def create_output_folder(output_folder):
     output_folder.mkdir(parents=True, exist_ok=True)
 
 def get_target_file_list(raw_mp4_list, processed_json_name_list):
-    return [f for f in raw_mp4_list \
-            if (f.name not in processed_json_name_list) & (f.name.startswith('D'))]
+    results = []
+    for f in raw_mp4_list:
+        if ((f.stem not in processed_json_name_list)):
+            print(f.name[:12], f.name[5])
+            results.append(f)
+    
+    return results
 
 def get_json_output_folder(input_file:Path):
     patient_id = input_file.name[:4]
@@ -48,19 +53,30 @@ def get_output_folder(input_file:Path):
     return output_file
 
 def main():
-    raw_mp4_list = RAW_DATA_PATH.glob('**/*.mp4')
-    processed_json_list = PROCESSED_DATA_PATH.glob('**/*.json')
+    raw_mp4_list = list(RAW_DATA_PATH.glob('**/*.mp4'))
+    raw_MP4_list = list(RAW_DATA_PATH.glob('**/*.MP4'))
+    raw_list = raw_mp4_list + raw_MP4_list
+    raw_list = [f for f in raw_list if (f.name[5] == 'G') and (f.name.startswith('D'))]
+    
+    processed_json_list = PROCESSED_DATA_PATH.glob('**/*.json') 
     processed_json_name_list = get_json_file_name_list(processed_json_list)
-    target_mp4_list = get_target_file_list(raw_mp4_list, processed_json_name_list)
-    print(list(target_mp4_list))
-    for mp4_file in target_mp4_list:
-        input_path = mp4_file
-        output_path = get_output_folder(mp4_file)
-        json_output_path = get_json_output_folder(mp4_file)
-        # print(str(input_path),
-        #       str(output_path), 
-        #       str(json_output_path))
-        run_openpose(input_path, output_path, json_output_path)
+    for f in raw_list:
+        if f.stem not in processed_json_name_list:
+            print(f)
+            output_path = get_output_folder(f)
+            json_output_path = get_json_output_folder(f)
+            run_openpose(f, output_path, json_output_path)
+    # target_mp4_list = get_target_file_list(raw_list, processed_json_name_list)
+    # print(target_mp4_list)
+    
+    # for mp4_file in target_mp4_list:
+    #     input_path = mp4_file
+    #     output_path = get_output_folder(mp4_file)
+    #     json_output_path = get_json_output_folder(mp4_file)
+    #     # print(str(input_path),
+    #     #       str(output_path), 
+    #     #       str(json_output_path))
+    #     # run_openpose(input_path, output_path, json_output_path)
         
 if __name__ == '__main__':
     main()
