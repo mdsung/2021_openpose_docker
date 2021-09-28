@@ -6,7 +6,7 @@ from pathlib import Path
 CURRENT_PATH = Path(__file__)
 RAW_DATA_PATH = Path('/data/processed/core/assembly/')
 PROCESSED_DATA_PATH = Path('/data/processed/core/assembly_json/')
-# RAW_DATA_PATH = Path('/home/nia_data/processed/core/assembly/')
+# RAW_DATA_PATH = Path('/home/nia_data/processed/core/assembly')
 # PROCESSED_DATA_PATH = Path('/home/nia_data/processed/core/assembly_json')
 
 def run_openpose(input_path, output_path, json_output_path, rendering=False):
@@ -21,7 +21,7 @@ def run_openpose(input_path, output_path, json_output_path, rendering=False):
         
     subprocess.run(cmd, shell = True)
     
-def read_folder_mp4_contents(path:Path, extension:str):
+def read_folder_contents(path:Path, extension:str):
     return path.glob(f'**/*.{extension}')
 
 def create_output_folder(output_folder):
@@ -48,11 +48,11 @@ def get_output_folder(input_file:Path):
     return output_file
 
 def main():
-    raw_mp4_list = read_folder_mp4_contents(RAW_DATA_PATH, "mp4")
-    processed_json_list = read_folder_mp4_contents(PROCESSED_DATA_PATH, 'json')
+    raw_mp4_list = RAW_DATA_PATH.glob('**/*.mp4')
+    processed_json_list = PROCESSED_DATA_PATH.glob('**/*.json')
     processed_json_name_list = get_json_file_name_list(processed_json_list)
     target_mp4_list = get_target_file_list(raw_mp4_list, processed_json_name_list)
-
+    print(list(target_mp4_list))
     for mp4_file in target_mp4_list:
         input_path = mp4_file
         output_path = get_output_folder(mp4_file)
